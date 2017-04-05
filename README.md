@@ -1,7 +1,7 @@
 # Mantle
 
-![](build/mantle_icon.png)
+![mantle_icon](build/mantle_icon.png)
 
 ## Feature
 
-Mantle is a standlone tool for Effects Workflow.
+Mantle is a standlone tool set for Effects Workflow.
