@@ -3,3 +3,6 @@ modules/*
 
 # Not ignore init file inside of modules
 !modules/__init__.py
+
+# Ignore specific file types
+*.pyc
