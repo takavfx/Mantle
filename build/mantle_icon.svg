@@ -17,7 +17,7 @@
    id="svg8"
    inkscape:version="0.91 r13725"
    sodipodi:docname="mantle_icon.svg"
-   inkscape:export-filename="F:\takanori\Library\2017_04\mantle\mantle_icon.png"
+   inkscape:export-filename="/home/takanori/Developments/Dev_777_GitKraken/Mantle/build/mantle_icon.png"
    inkscape:export-xdpi="720"
    inkscape:export-ydpi="720">
   <defs
@@ -60,18 +60,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="22.627418"
-     inkscape:cx="19.102395"
-     inkscape:cy="15.918268"
+     inkscape:zoom="8.0000004"
+     inkscape:cx="28.411275"
+     inkscape:cy="30.717772"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer3"
      showgrid="true"
-     inkscape:window-width="1855"
-     inkscape:window-height="1056"
-     inkscape:window-x="65"
-     inkscape:window-y="24"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
      inkscape:window-maximized="1"
-     showguides="true"
+     showguides="false"
      inkscape:snap-others="true"
      inkscape:snap-global="true"
      units="px"
@@ -95,7 +95,21 @@
   <g
      inkscape:groupmode="layer"
      id="layer3"
-     inkscape:label="BackColour" />
+     inkscape:label="BackColour"
+     style="display:inline">
+    <path
+       style="fill:#333333;stroke-width:0.00771688;paint-order:markers fill stroke"
+       d="m 1.0633167,6.0324199 0.00386,-3.67925 3.1661554,-1.82759999 3.1661552,1.82759999 0.00386,3.67886 -3.1714894,1.91145 z m 5.6709462,-0.3790198 0,-2.9192102 -2.5014031,-1.4596 -2.5014032,1.4596 0,2.9960301 2.5014032,1.4595998 z"
+       id="path57-3"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccccc" />
+    <path
+       style="fill:#cccccc;stroke-width:0.00771688;paint-order:markers fill stroke"
+       d="M 0.83973031,6.1592283 0.84386257,2.2204748 4.2333321,0.26397123 7.6228014,2.2204748 7.6269337,6.1588109 4.231754,8.2050786 Z"
+       id="path57-6"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
+  </g>
   <g
      inkscape:label="レイヤー 1"
      inkscape:groupmode="layer"
@@ -115,8 +129,10 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="main"
-     transform="translate(0,-288.53334)">
-    <ellipse
+     transform="translate(0,-288.53334)"
+     sodipodi:insensitive="true"
+     style="display:inline">
+    <circle
        id="path59"
        cx="104.31254"
        cy="180.34064"
