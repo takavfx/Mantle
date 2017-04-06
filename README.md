@@ -1,6 +1,6 @@
 # Mantle
 
-![mantle_icon](build/mantle_icon.png)
+![mantle_icon](static/mantle_icon.png)
 
 ## Feature
 
