@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import webbrowser
 from PySide import QtCore, QtGui, QtSvg
 
 import define as DEFINE
@@ -57,6 +58,13 @@ class MantraMainWindow(QtGui.QMainWindow):
         self.quitAction = QtGui.QAction("Quit", self,
                 triggered=QtGui.qApp.quit)
 
+        self.openGitHubAction = QtGui.QAction("GitHub on Mantle", self,
+                triggered=self.openGitHubButtonTriggered)
+
+
+    def openGitHubButtonTriggered(self):
+        webbrowser.open('http://github.com/takavfx/Mantle')
+
 
     def createTrayIcon(self):
         self.trayIconMenu = QtGui.QMenu(self)
@@ -64,6 +72,8 @@ class MantraMainWindow(QtGui.QMainWindow):
         self.trayIconMenu.addAction(self.hideAction)
         self.trayIconMenu.addAction(self.raiseAction)
         self.trayIconMenu.addAction(self.maximizeAction)
+        self.trayIconMenu.addSeparator()
+        self.trayIconMenu.addAction(self.openGitHubAction)
         self.trayIconMenu.addSeparator()
         self.trayIconMenu.addAction(self.quitAction)
 
@@ -75,7 +85,9 @@ class MantraMainWindow(QtGui.QMainWindow):
 
     def createBaseTabWidget(self):
         self.baseTabWidget = QtGui.QTabWidget(self)
-        self.baseTabWidget.addTab(Prefs.Preferences(self), self._prefsIcon, "Preferences")
+        self.baseTabWidget.addTab(Prefs.Preferences(self),
+                self._prefsIcon, "Preferences")
+
 
 
 
