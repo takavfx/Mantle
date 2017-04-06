@@ -4,11 +4,16 @@ from PySide import QtCore, QtGui, QtSvg
 
 import define as DEFINE
 reload(DEFINE)
+import preferences as Prefs
+reload(Prefs)
 
 class MantraMainWindow(QtGui.QMainWindow):
 
-    _windowTitle = DEFINE.windowTitle
-    _mantleIcon  = QtGui.QIcon(DEFINE.mantleIconPath)
+    _windowTitle  = DEFINE.windowTitle
+    _windowHeight = DEFINE.windowHeight
+    _windowWidth  = DEFINE.windowWidth
+    _mantleIcon   = DEFINE.mantleIconPath
+    _prefsIcon    = DEFINE.preferencesIconPath
 
     def __init__(self, parent=None):
         super(MantraMainWindow, self).__init__(parent)
@@ -21,21 +26,19 @@ class MantraMainWindow(QtGui.QMainWindow):
 
         self.setWindowTitle(self._windowTitle)
         self.setWindowIcon(self._mantleIcon)
-        self.setWindowsPosition()
+
+        self.createBaseTabWidget()
+        self.setCentralWidget(self.baseTabWidget)
+
+        self.setGeometry(0, 0, self._windowWidth, self._windowHeight)
+
 
     def initGUI(self):
-        self.resize(1200, 800)
+        self.resize(self._windowWidth, self._windowHeight)
 
-        # self.setWindowFlags(QtCore.Qt.FramelessWindowHint)
 
-    def setWindowsPosition(self):
-        pos = self.pos()
-
-        if pos.x() < 0:
-            pos.setX(0)
-
-        if pos.y() < 0:
-            pos.setY(0)
+    def setSignals(self):
+        pass
 
 
     def createActions(self):
@@ -45,10 +48,13 @@ class MantraMainWindow(QtGui.QMainWindow):
         self.hideAction = QtGui.QAction("Hide", self,
                 triggered=self.hide)
 
-        self.maximizeAction = QtGui.QAction("Ma&ximize", self,
+        self.raiseAction = QtGui.QAction("Bring to Top", self,
+                triggered=self.raise_)
+
+        self.maximizeAction = QtGui.QAction("Maximize", self,
                 triggered=self.showMaximized)
 
-        self.quitAction = QtGui.QAction("&Quit", self,
+        self.quitAction = QtGui.QAction("Quit", self,
                 triggered=QtGui.qApp.quit)
 
 
@@ -56,6 +62,7 @@ class MantraMainWindow(QtGui.QMainWindow):
         self.trayIconMenu = QtGui.QMenu(self)
         self.trayIconMenu.addAction(self.showAction)
         self.trayIconMenu.addAction(self.hideAction)
+        self.trayIconMenu.addAction(self.raiseAction)
         self.trayIconMenu.addAction(self.maximizeAction)
         self.trayIconMenu.addSeparator()
         self.trayIconMenu.addAction(self.quitAction)
@@ -66,16 +73,11 @@ class MantraMainWindow(QtGui.QMainWindow):
         self.trayIcon.setIcon(self._mantleIcon)
 
 
-    # def mousePressEvent(self, event):
-    #     if QtCore.Qt.FramelessWindowHint:
-    #         self.offset = event.pos()
-    #
-    # def mouseMoveEvent(self, event):
-    #     x=event.globalX()
-    #     y=event.globalY()
-    #     x_w = self.offset.x()
-    #     y_w = self.offset.y()
-    #     self.move(x-x_w, y-y_w)
+    def createBaseTabWidget(self):
+        self.baseTabWidget = QtGui.QTabWidget(self)
+        self.baseTabWidget.addTab(Prefs.Preferences(self), self._prefsIcon, "Preferences")
+
+
 
 if __name__ == '__main__':
 

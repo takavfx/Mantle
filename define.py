@@ -1,13 +1,18 @@
 import os
 import sys
 
+from PySide import QtGui
+
 _CURRENTPATH = os.path.dirname(os.path.realpath(__file__))
 
 
 
-mantleIconPath = os.path.join(_CURRENTPATH, 'static', 'mantle_icon.svg')
+mantleIconPath = QtGui.QIcon(os.path.join(_CURRENTPATH, 'static', 'mantle_icon.svg'))
+preferencesIconPath = QtGui.QIcon(os.path.join(_CURRENTPATH, 'static', 'gear.svg'))
 
 version = '0.1.0'
 
-windowName  = 'mantleWindow'
-windowTitle = "Mantle"
+windowHeight = 800
+windowName   = 'mantleWindow'
+windowTitle  = "Mantle"
+windowWidth  = 1200
