@@ -8,16 +8,17 @@ reload(DEFINE)
 import preferences as Prefs
 reload(Prefs)
 
-class MantraMainWindow(QtGui.QMainWindow):
-
+class MainWindow(QtGui.QMainWindow):
+    """
+    Main window class of this tool.
+    """
     _windowTitle  = DEFINE.windowTitle
     _windowHeight = DEFINE.windowHeight
     _windowWidth  = DEFINE.windowWidth
     _mantleIcon   = DEFINE.mantleIconPath
-    _prefsIcon    = DEFINE.preferencesIconPath
 
     def __init__(self, parent=None):
-        super(MantraMainWindow, self).__init__(parent)
+        super(MainWindow, self).__init__(parent)
 
         self.initGUI()
 
@@ -28,8 +29,9 @@ class MantraMainWindow(QtGui.QMainWindow):
         self.setWindowTitle(self._windowTitle)
         self.setWindowIcon(self._mantleIcon)
 
-        self.createBaseTabWidget()
-        self.setCentralWidget(self.baseTabWidget)
+        ## Generate Widgets
+        tabs = TabController(self)
+        self.setCentralWidget(tabs)
 
         self.setGeometry(0, 0, self._windowWidth, self._windowHeight)
 
@@ -83,20 +85,50 @@ class MantraMainWindow(QtGui.QMainWindow):
         self.trayIcon.setIcon(self._mantleIcon)
 
 
+
+class TabController(QtGui.QTabWidget):
+    """
+    Tab Controller cantains get tabs from packages and set tabs.
+    """
+
+    def __init__(self, parent=None):
+        super(TabController, self).__init__(parent)
+        self._parent = parent
+
+        self.createBaseTabWidget()
+
+
     def createBaseTabWidget(self):
-        self.baseTabWidget = QtGui.QTabWidget(self)
-        self.baseTabWidget.addTab(Prefs.Preferences(self),
-                self._prefsIcon, "Preferences")
+        self.setMovable(True)
+        self.setInitialTabs()
+
+
+    def setInitialTabs(self):
+        self.setPareferences()
+
+
+    def setPareferences(self):
+        self.addTab(Prefs.Preferences(self._parent),
+                DEFINE.preferencesIconPath, "Preferences")
+
+
+    def getTabIndex(self, name):
+        while index in self.count():
+            if self.tabText(i) == name:
+                return index
 
 
 
-
-if __name__ == '__main__':
-
+def main():
     import sys
 
     app = QtGui.QApplication(sys.argv)
     app.setQuitOnLastWindowClosed(False)
-    mainWindow = MantraMainWindow()
+    mainWindow = MainWindow()
     mainWindow.show()
     sys.exit(app.exec_())
+
+
+
+if __name__ == '__main__':
+    main()
