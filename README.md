@@ -2,6 +2,9 @@
 
 ![mantle_icon](static/mantle_icon.png)
 
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/takavfx/Mantle/blob/master/LICENSE.md)
+
+
 ## Feature
 
 Mantle is a standalone tool base sets.
