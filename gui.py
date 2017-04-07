@@ -15,7 +15,7 @@ class MainWindow(QtGui.QMainWindow):
     _windowTitle  = DEFINE.windowTitle
     _windowHeight = DEFINE.windowHeight
     _windowWidth  = DEFINE.windowWidth
-    _mantleIcon   = DEFINE.mantleIconPath
+    mantleIcon    = DEFINE.mantleIconPath
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -27,7 +27,7 @@ class MainWindow(QtGui.QMainWindow):
         self.trayIcon.show()
 
         self.setWindowTitle(self._windowTitle)
-        self.setWindowIcon(self._mantleIcon)
+        self.setWindowIcon(self.mantleIcon)
 
         ## Generate Widgets
         tabs = TabController(self)
@@ -40,8 +40,8 @@ class MainWindow(QtGui.QMainWindow):
         self.resize(self._windowWidth, self._windowHeight)
 
 
-    def setSignals(self):
-        pass
+    def openGitHubButtonTriggered(self):
+        webbrowser.open('http://github.com/takavfx/Mantle')
 
 
     def createActions(self):
@@ -64,25 +64,22 @@ class MainWindow(QtGui.QMainWindow):
                 triggered=self.openGitHubButtonTriggered)
 
 
-    def openGitHubButtonTriggered(self):
-        webbrowser.open('http://github.com/takavfx/Mantle')
-
-
     def createTrayIcon(self):
-        self.trayIconMenu = QtGui.QMenu(self)
-        self.trayIconMenu.addAction(self.showAction)
-        self.trayIconMenu.addAction(self.hideAction)
-        self.trayIconMenu.addAction(self.raiseAction)
-        self.trayIconMenu.addAction(self.maximizeAction)
-        self.trayIconMenu.addSeparator()
-        self.trayIconMenu.addAction(self.openGitHubAction)
-        self.trayIconMenu.addSeparator()
-        self.trayIconMenu.addAction(self.quitAction)
+        trayIconMenu = QtGui.QMenu(self)
+        trayIconMenu.addAction(self.showAction)
+        trayIconMenu.addAction(self.hideAction)
+        trayIconMenu.addAction(self.raiseAction)
+        trayIconMenu.addAction(self.maximizeAction)
+        trayIconMenu.addSeparator()
+        trayIconMenu.addAction(self.openGitHubAction)
+        trayIconMenu.addSeparator()
+        trayIconMenu.addAction(self.quitAction)
 
         self.trayIcon = QtGui.QSystemTrayIcon(self)
-        self.trayIcon.setContextMenu(self.trayIconMenu)
+        self.trayIcon.setContextMenu(trayIconMenu)
 
         self.trayIcon.setIcon(self._mantleIcon)
+
 
 
 
