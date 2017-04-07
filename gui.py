@@ -4,9 +4,7 @@ import webbrowser
 from PySide import QtCore, QtGui, QtSvg
 
 import define as DEFINE
-reload(DEFINE)
 import preferences as Prefs
-reload(Prefs)
 
 class MainWindow(QtGui.QMainWindow):
     """
@@ -78,7 +76,7 @@ class MainWindow(QtGui.QMainWindow):
         self.trayIcon = QtGui.QSystemTrayIcon(self)
         self.trayIcon.setContextMenu(trayIconMenu)
 
-        self.trayIcon.setIcon(self._mantleIcon)
+        self.trayIcon.setIcon(self.mantleIcon)
 
 
 
