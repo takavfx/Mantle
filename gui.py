@@ -63,7 +63,7 @@ class MainWindow(QtGui.QMainWindow):
         self.quitAction = QtGui.QAction("Quit", self,
                 triggered=QtGui.qApp.quit)
 
-        self.openGitHubAction = QtGui.QAction("GitHub on Mantle", self,
+        self.openGitHubAction = QtGui.QAction("Mantle on GitHub", self,
                 triggered=self.openGitHubButtonTriggered)
 
 
