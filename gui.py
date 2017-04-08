@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 
+import os
 import webbrowser
 from PySide import QtCore, QtGui, QtSvg
 
 import define as DEFINE
 import preferences as Prefs
+
+_CURRENTPATH = os.path.dirname(os.path.realpath(__file__))
+
+
 
 class MainWindow(QtGui.QMainWindow):
     """
@@ -95,6 +100,7 @@ class TabController(QtGui.QTabWidget):
 
     def createBaseTabWidget(self):
         self.setMovable(True)
+        self.setImportedPackageTabs()
         self.setInitialTabs()
 
 
@@ -105,6 +111,21 @@ class TabController(QtGui.QTabWidget):
     def setPareferences(self):
         self.addTab(Prefs.Preferences(self._parent),
                 DEFINE.preferencesIconPath, "Preferences")
+
+
+    def setImportedPackageTabs(self):
+        packageNames = ['packages.%s'%x for x in os.listdir('%s/packages'%_CURRENTPATH)]
+        packageNames.remove('packages.__init__.py')
+        packageNames.remove('packages.__init__.pyc')
+
+        import importlib
+        for package in packageNames:
+            module = importlib.import_module(package)
+            widget, icon,title = module.getWidget(self._parent)
+            if icon is None:
+                self.addTab(widget, title)
+            else:
+                self.addTab(widget, icon, title)
 
 
     def getTabIndex(self, name):
