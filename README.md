@@ -36,6 +36,6 @@ def getWidget(parent):
 
 `widget`    : [REQUIRED] This returns widget that will be automatically added in the Mantle tab list.
 
-`icon`      : [OPTIONAL] This returns icon QtGui.QIcon object. This also can be None if icon is not prepared.
+`icon`      : [OPTIONAL] This returns icon QtGui.QIcon object. This can be None if icon is not prepared.
 
 `title`     : [REQUIRED] This returns title name that is displayed as Tab Name.
