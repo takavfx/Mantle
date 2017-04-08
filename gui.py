@@ -111,7 +111,8 @@ class TabController(QtGui.QTabWidget):
 
 
     def close_handler(self, index):
-        self.removeTab(index)
+        if self.count() != 1:
+            self.removeTab(index)
 
 
     def createAddButton(self):
