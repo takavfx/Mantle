@@ -39,3 +39,8 @@ def getWidget(parent):
 `icon`      : [OPTIONAL] This returns icon QtGui.QIcon object. This can be None if icon is not prepared.
 
 `title`     : [REQUIRED] This returns title name that is displayed as Tab Name.
+
+
+## Images
+
+![](static/ss_prefs_window.png)
