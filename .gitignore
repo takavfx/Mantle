@@ -1,8 +1,9 @@
 # Ignore under module folder
 packages/*
 
-# Not ignore init file inside of modules
+# Not ignore init file and Preferences package inside of packages
 !packages/__init__.py
+!packages/Preferences/*
 
 # Ignore specific file types
 *.pyc
