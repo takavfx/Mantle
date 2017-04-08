@@ -43,4 +43,4 @@ def getWidget(parent):
 
 ## Images
 
-![](static/ss_prefs_window.png)
+![](static/ss_prefs_tab.png)
