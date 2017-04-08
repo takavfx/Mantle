@@ -18,7 +18,7 @@ class MainWindow(QtGui.QMainWindow):
     _windowTitle  = DEFINE.windowTitle
     _windowHeight = DEFINE.windowHeight
     _windowWidth  = DEFINE.windowWidth
-    mantleIcon    = DEFINE.mantleIconPath
+    mantleIcon    = QtGui.QIcon(DEFINE.mantleIconPath)
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
@@ -110,7 +110,7 @@ class TabController(QtGui.QTabWidget):
 
     def setPareferences(self):
         self.addTab(Prefs.Preferences(self._parent),
-                DEFINE.preferencesIconPath, "Preferences")
+                QtGui.QIcon(DEFINE.preferencesIconPath), "Preferences")
 
 
     def setImportedPackageTabs(self):
@@ -123,7 +123,8 @@ class TabController(QtGui.QTabWidget):
             module = importlib.import_module(package)
             widget, icon,title = module.getWidget(self._parent)
             if icon is None:
-                self.addTab(widget, title)
+                icon = QtGui.QIcon(DEFINE.defaultIconPath)
+                self.addTab(widget, icon, title)
             else:
                 self.addTab(widget, icon, title)
 
