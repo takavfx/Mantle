@@ -8,7 +8,6 @@ import importlib
 from PySide import QtCore, QtGui, QtSvg
 
 import define as DEFINE
-import preferences as Prefs
 
 _CURRENTPATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -105,7 +104,6 @@ class TabController(QtGui.QTabWidget):
     def createBaseTabWidget(self):
         self.setCornerWidget(self.createAddButton())
         self.setImportedPackageTabs()
-        self.setInitialTabs()
 
 
     def setSignals(self):
@@ -120,17 +118,10 @@ class TabController(QtGui.QTabWidget):
         self.addTabMenu = QtGui.QMenu(self)
 
         button = QtGui.QPushButton()
+        button.setFlat(True)
+        button.setIcon(QtGui.QIcon(os.path.join(_CURRENTPATH, 'static', 'plus.svg')))
         button.setMenu(self.addTabMenu)
         return button
-
-
-    def setInitialTabs(self):
-        self.setPareferences()
-
-
-    def setPareferences(self):
-        self.addTab(Prefs.Preferences(self),
-                QtGui.QIcon(DEFINE.preferencesIconPath), "Preferences")
 
 
     def setImportedPackageTabs(self):
@@ -139,32 +130,39 @@ class TabController(QtGui.QTabWidget):
         packageNames.remove('packages.__init__.pyc')
 
         for package in packageNames:
-            widget, icon, title = self.addTabWithPackage(package)
+            widget, icon, title = self.addTabByPackage(package)
 
             ## Add tab action
-            cmd    = partial(self.addTabWithPackage, package)
+            cmd    = partial(self.addTabByPackage, package)
             action = QtGui.QAction(title, self,
                     triggered=cmd)
-            print action
             self.addTabMenu.addAction(action)
 
 
-    def addTabWithPackage(self, package):
+    def addTabByPackage(self, package):
         module = importlib.import_module(package)
         widget, icon, title = module.getWidget(self)
-        if icon is None:
-            icon = QtGui.QIcon(DEFINE.defaultIconPath)
-            self.addTab(widget, icon, title)
-        else:
-            self.addTab(widget, icon, title)
+        index = self.getTabIndexByTitle(title)
+        if index is None:
+            if icon is None:
+                icon = QtGui.QIcon(DEFINE.defaultIconPath)
+                self.addTab(widget, icon, title)
+            else:
+                self.addTab(widget, icon, title)
 
-        return widget, icon, title
+            return widget, icon, title
 
 
-    def getTabIndex(self, name):
-        while index in self.count():
-            if self.tabText(index) == name:
+    def getTabIndexByTitle(self, title):
+        index = 0
+        while index < self.count():
+            if self.tabText(index) == title:
                 return index
+
+            index += 1
+
+        return None
+
 
 
 
