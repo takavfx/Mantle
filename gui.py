@@ -2,6 +2,9 @@
 
 import os
 import webbrowser
+from functools import partial
+import importlib
+
 from PySide import QtCore, QtGui, QtSvg
 
 import define as DEFINE
@@ -22,6 +25,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
+
 
         self.initGUI()
 
@@ -93,15 +97,31 @@ class TabController(QtGui.QTabWidget):
 
     def __init__(self, parent=None):
         super(TabController, self).__init__(parent)
-        self._parent = parent
 
         self.createBaseTabWidget()
+        self.setSignals()
 
 
     def createBaseTabWidget(self):
-        self.setMovable(True)
+        self.setCornerWidget(self.createAddButton())
         self.setImportedPackageTabs()
         self.setInitialTabs()
+
+
+    def setSignals(self):
+        self.tabCloseRequested.connect(self.close_handler)
+
+
+    def close_handler(self, index):
+        self.removeTab(index)
+
+
+    def createAddButton(self):
+        self.addTabMenu = QtGui.QMenu(self)
+
+        button = QtGui.QPushButton()
+        button.setMenu(self.addTabMenu)
+        return button
 
 
     def setInitialTabs(self):
@@ -109,7 +129,7 @@ class TabController(QtGui.QTabWidget):
 
 
     def setPareferences(self):
-        self.addTab(Prefs.Preferences(self._parent),
+        self.addTab(Prefs.Preferences(self),
                 QtGui.QIcon(DEFINE.preferencesIconPath), "Preferences")
 
 
@@ -118,21 +138,34 @@ class TabController(QtGui.QTabWidget):
         packageNames.remove('packages.__init__.py')
         packageNames.remove('packages.__init__.pyc')
 
-        import importlib
         for package in packageNames:
-            module = importlib.import_module(package)
-            widget, icon,title = module.getWidget(self._parent)
-            if icon is None:
-                icon = QtGui.QIcon(DEFINE.defaultIconPath)
-                self.addTab(widget, icon, title)
-            else:
-                self.addTab(widget, icon, title)
+            widget, icon, title = self.addTabWithPackage(package)
+
+            ## Add tab action
+            cmd    = partial(self.addTabWithPackage, package)
+            action = QtGui.QAction(title, self,
+                    triggered=cmd)
+            print action
+            self.addTabMenu.addAction(action)
+
+
+    def addTabWithPackage(self, package):
+        module = importlib.import_module(package)
+        widget, icon, title = module.getWidget(self)
+        if icon is None:
+            icon = QtGui.QIcon(DEFINE.defaultIconPath)
+            self.addTab(widget, icon, title)
+        else:
+            self.addTab(widget, icon, title)
+
+        return widget, icon, title
 
 
     def getTabIndex(self, name):
         while index in self.count():
-            if self.tabText(i) == name:
+            if self.tabText(index) == name:
                 return index
+
 
 
 
@@ -140,7 +173,7 @@ def main():
     import sys
 
     app = QtGui.QApplication(sys.argv)
-    app.setQuitOnLastWindowClosed(False)
+    # app.setQuitOnLastWindowClosed(False)
     mainWindow = MainWindow()
     mainWindow.show()
     sys.exit(app.exec_())
