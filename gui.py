@@ -127,8 +127,11 @@ class TabController(QtGui.QTabWidget):
 
     def setImportedPackageTabs(self):
         packageNames = ['packages.%s'%x for x in os.listdir('%s/packages'%_CURRENTPATH)]
-        packageNames.remove('packages.__init__.py')
-        packageNames.remove('packages.__init__.pyc')
+        try:
+            packageNames.remove('packages.__init__.py')
+            packageNames.remove('packages.__init__.pyc')
+        except:
+            pass
 
         for package in packageNames:
             widget, icon, title = self.addTabByPackage(package)
