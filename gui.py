@@ -45,8 +45,6 @@ class MainWindow(QtGui.QMainWindow):
     def initGUI(self):
         self.resize(self._windowWidth, self._windowHeight)
 
-        with open("O:/TeamPublic/TD/Users/hoshina/samples/qss/simpledark.qss","r") as f:
-            self.setStyleSheet("".join(f.readlines()))
 
     def openGitHubButtonTriggered(self):
         webbrowser.open('http://github.com/takavfx/Mantle')
