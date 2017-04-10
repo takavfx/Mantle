@@ -39,12 +39,14 @@ class MainWindow(QtGui.QMainWindow):
         tabs = TabController(self)
         self.setCentralWidget(tabs)
 
-        self.setGeometry(0, 0, self._windowWidth, self._windowHeight)
-
+        self.resize(self._windowWidth, self._windowHeight)
+        # self.move(QtGui.QApplication.desktop().screen().rect().center()- self.rect().center())
 
     def initGUI(self):
         self.resize(self._windowWidth, self._windowHeight)
 
+        with open("O:/TeamPublic/TD/Users/hoshina/samples/qss/simpledark.qss","r") as f:
+            self.setStyleSheet("".join(f.readlines()))
 
     def openGitHubButtonTriggered(self):
         webbrowser.open('http://github.com/takavfx/Mantle')
