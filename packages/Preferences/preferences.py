@@ -29,7 +29,7 @@ class Preferences(QtGui.QWidget):
 
     def setSignals(self):
         self.UI.setMovableCheckBox.clicked.connect(self.setMovableToggle)
-        self.UI.setCloseableCheckBox.clicked.connect(self.setClosableToggle)
+        self.UI.setClosableCheckBox.clicked.connect(self.setClosableToggle)
 
 
     def setMovableToggle(self):
@@ -41,7 +41,7 @@ class Preferences(QtGui.QWidget):
 
 
     def setClosableToggle(self):
-        toggle = self.UI.setCloseableCheckBox.checkState()
+        toggle = self.UI.setClosableCheckBox.checkState()
         if toggle:
             self._parent.setTabsClosable(True)
         else:

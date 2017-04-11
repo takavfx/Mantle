@@ -196,12 +196,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="setCloseableCheckBox">
+        <widget class="QCheckBox" name="setClosableCheckBox">
          <property name="enabled">
           <bool>true</bool>
          </property>
          <property name="text">
-          <string>Set Closeable</string>
+          <string>Set Closable</string>
          </property>
         </widget>
        </item>
