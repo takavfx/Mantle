@@ -134,18 +134,18 @@ class TabController(QtGui.QTabWidget):
             pass
 
         for package in packageNames:
-            widget, icon, title = self.addTabByPackage(package)
+            module = importlib.import_module(package)
+            widget, icon, title = module.getWidget(self)
+            self.addTabByItems(widget, icon, title)
 
             ## Add tab action
-            cmd    = partial(self.addTabByPackage, package)
+            cmd    = partial(self.addTabByItems, widget, icon, title)
             action = QtGui.QAction(title, self,
                     triggered=cmd)
             self.addTabMenu.addAction(action)
 
 
-    def addTabByPackage(self, package):
-        module = importlib.import_module(package)
-        widget, icon, title = module.getWidget(self)
+    def addTabByItems(self, widget, icon, title):
         index = self.getTabIndexByTitle(title)
         if index is None:
             if icon is None:
@@ -153,8 +153,6 @@ class TabController(QtGui.QTabWidget):
                 self.addTab(widget, icon, title)
             else:
                 self.addTab(widget, icon, title)
-
-            return widget, icon, title
 
 
     def getTabIndexByTitle(self, title):
