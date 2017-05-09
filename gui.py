@@ -36,8 +36,8 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowIcon(self.mantleIcon)
 
         ## Generate Widgets
-        tabs = TabController(self)
-        self.setCentralWidget(tabs)
+        self.tabs = TabController(self)
+        self.setCentralWidget(self.tabs)
 
         self.resize(self._windowWidth, self._windowHeight)
         # self.move(QtGui.QApplication.desktop().screen().rect().center()- self.rect().center())
@@ -86,6 +86,11 @@ class MainWindow(QtGui.QMainWindow):
 
         self.trayIcon.setIcon(self.mantleIcon)
 
+
+    def closeEvent(self, event):
+        from packages.Preferences import preferences as prefs
+        prefs.Preferences(self.tabs).writeAction()
+        print '[ Mantle ] :: Has written down settings into config file...'
 
 
 
