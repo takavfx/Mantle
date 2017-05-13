@@ -17,6 +17,8 @@ class MainWindow(QtGui.QMainWindow):
     """
     Main window class of this tool.
     """
+
+    _windowName   = DEFINE.windowName
     _windowTitle  = DEFINE.windowTitle
     _windowHeight = DEFINE.windowHeight
     _windowWidth  = DEFINE.windowWidth
@@ -24,10 +26,10 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
-
-
         self.initGUI()
 
+
+    def initGUI(self):
         self.createActions()
         self.createTrayIcon()
         self.trayIcon.show()
@@ -39,10 +41,10 @@ class MainWindow(QtGui.QMainWindow):
         self.tabs = TabController(self)
         self.setCentralWidget(self.tabs)
 
-        self.resize(self._windowWidth, self._windowHeight)
+        self.resetWindowSize()
         # self.move(QtGui.QApplication.desktop().screen().rect().center()- self.rect().center())
 
-    def initGUI(self):
+    def resetWindowSize(self):
         self.resize(self._windowWidth, self._windowHeight)
 
 
