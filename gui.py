@@ -89,12 +89,6 @@ class MainWindow(QtGui.QMainWindow):
         self.trayIcon.setIcon(self.mantleIcon)
 
 
-    def closeEvent(self, event):
-        from packages.Preferences import preferences as prefs
-        prefs.Preferences(self.tabs).writeAction()
-        print '[ Mantle ] :: Has written down settings into config file...'
-
-
 
 class TabController(QtGui.QTabWidget):
     """

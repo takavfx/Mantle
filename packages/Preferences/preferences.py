@@ -42,14 +42,14 @@ class Preferences(QtGui.QWidget):
     def loadConfig(self):
         system = platform.system()
         if system == 'Linux':
-            ini_file = os.path.join(os.environ.get('HOME'), DEFINE.config_name)
+            self._ini_file = os.path.join(os.environ.get('HOME'), DEFINE.config_name)
         elif system == 'Mac':
-            ini_file = os.path.join(os.environ.get('HOME'), DEFINE.config_name)
+            self._ini_file = os.path.join(os.environ.get('HOME'), DEFINE.config_name)
         elif system == 'Windows':
-            ini_file = os.path.join(os.environ.get('APPDATA'), DEFINE.config_name)
+            self._ini_file = os.path.join(os.environ.get('APPDATA'), DEFINE.config_name)
 
-        if os.path.exists(ini_file):
-            self._config.read(ini_file)
+        if os.path.exists(self._ini_file):
+            self._config.read(self._ini_file)
         else:
             self.writeAction()
 
@@ -59,31 +59,26 @@ class Preferences(QtGui.QWidget):
 
     def loadAction(self):
         if self._config.get('Preferences', 'movable'):
-            self.UI.setMovableCheckBox.setCheckState(QtCore.Qt.CheckState(bool(int(self._config.get('Preferences', 'movable')))))
+            self.UI.setMovableCheckBox.setCheckState(QtCore.Qt.CheckState(int(self._config.get('Preferences', 'movable'))))
             self.setMovableToggle()
 
         if self._config.get('Preferences', 'closable'):
-            self.UI.setClosableCheckBox.setCheckState(QtCore.Qt.CheckState(bool(int(self._config.get('Preferences', 'closable')))))
+            self.UI.setClosableCheckBox.setCheckState(QtCore.Qt.CheckState(int(self._config.get('Preferences', 'closable'))))
             self.setClosableToggle()
 
 
     def writeAction(self):
-        system = platform.system()
-        if system == 'Linux':
-            ini_file = os.path.join(os.environ.get('HOME'), DEFINE.config_name)
-        elif system == 'Mac':
-            ini_file = os.path.join(os.environ.get('HOME'), DEFINE.config_name)
-        elif system == 'Windows':
-            ini_file = os.path.join(os.environ.get('APPDATA'), DEFINE.config_name)
-
-
         if not self._config.has_section('Preferences'):
             self._config.add_section('Preferences')
         self._config.set('Preferences', 'movable', str(int(self.UI.setMovableCheckBox.checkState())))
         self._config.set('Preferences', 'closable', str(int(self.UI.setClosableCheckBox.checkState())))
-        print str(int(self.UI.setMovableCheckBox.checkState()))
-        
-        with open(ini_file, 'w') as f:
+
+        with open(self._ini_file, 'w') as f:
+            self._config.write(f)
+
+
+    def writeConfigFile(self):
+        with open(self._ini_file, 'w') as f:
             self._config.write(f)
 
 
@@ -93,6 +88,9 @@ class Preferences(QtGui.QWidget):
             self._parent.setMovable(True)
         else:
             self._parent.setMovable(False)
+        self._config.set('Preferences', 'movable', str(int(toggle)))
+
+        self.writeConfigFile()
 
 
     def setClosableToggle(self):
@@ -101,3 +99,6 @@ class Preferences(QtGui.QWidget):
             self._parent.setTabsClosable(True)
         else:
             self._parent.setTabsClosable(False)
+        self._config.set('Preferences', 'closable', str(int(toggle)))
+
+        self.writeConfigFile()
